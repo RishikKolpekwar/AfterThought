@@ -1,0 +1,16 @@
+{
+  "name": "gridcase-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && NODE_OPTIONS='--max-old-space-size=8192' vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@arcgis/core": "^5.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}

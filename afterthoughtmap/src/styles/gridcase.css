@@ -1,0 +1,263 @@
+/* ============================================
+   GridCase Viewer — BEM, CSS Custom Properties
+   ============================================ */
+
+:root {
+  --gc-font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --gc-panel-bg: rgba(255, 255, 255, 0.95);
+  --gc-panel-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  --gc-panel-radius: 8px;
+  --gc-panel-width: 260px;
+  --gc-accent: #0079c1;
+  --gc-text: #333;
+  --gc-text-muted: #666;
+  --gc-border: #e0e0e0;
+  --gc-btn-bg: #fff;
+  --gc-btn-hover: #f0f0f0;
+  --gc-overlay-bg: rgba(255, 255, 255, 0.92);
+}
+
+/* Root container */
+.gc-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--gc-font);
+}
+
+/* SceneView container */
+.gc-view {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide ArcGIS default UI */
+.gc-view .esri-ui {
+  display: none !important;
+}
+
+/* ---- State Overlay ---- */
+
+.gc-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--gc-overlay-bg);
+  backdrop-filter: blur(4px);
+}
+
+.gc-overlay--visible {
+  display: flex;
+}
+
+.gc-overlay__content {
+  text-align: center;
+  padding: 2rem;
+  max-width: 400px;
+}
+
+.gc-overlay__spinner {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  border: 4px solid var(--gc-border);
+  border-top-color: var(--gc-accent);
+  border-radius: 50%;
+  animation: gc-spin 0.8s linear infinite;
+}
+
+@keyframes gc-spin {
+  to { transform: rotate(360deg); }
+}
+
+.gc-overlay__icon {
+  font-size: 3rem;
+  color: #d9534f;
+  margin-bottom: 0.5rem;
+}
+
+.gc-overlay__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gc-text);
+  margin-bottom: 0.5rem;
+}
+
+.gc-overlay__text {
+  font-size: 0.95rem;
+  color: var(--gc-text-muted);
+  line-height: 1.5;
+}
+
+/* ---- Control Panel ---- */
+
+.gc-panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  width: var(--gc-panel-width);
+  max-height: calc(100% - 32px);
+  display: flex;
+  flex-direction: column;
+}
+
+.gc-panel__toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--gc-panel-radius);
+  background: var(--gc-panel-bg);
+  box-shadow: var(--gc-panel-shadow);
+  font-size: 1.25rem;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 8px;
+  color: var(--gc-text);
+}
+
+.gc-panel__toggle:hover {
+  background: var(--gc-btn-hover);
+}
+
+.gc-panel__body {
+  background: var(--gc-panel-bg);
+  border-radius: var(--gc-panel-radius);
+  box-shadow: var(--gc-panel-shadow);
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---- Zoom Controls ---- */
+
+.gc-zoom {
+  display: flex;
+  gap: 4px;
+}
+
+.gc-zoom__btn {
+  flex: 1;
+  height: 36px;
+  border: 1px solid var(--gc-border);
+  border-radius: 6px;
+  background: var(--gc-btn-bg);
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--gc-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.gc-zoom__btn:hover {
+  background: var(--gc-btn-hover);
+}
+
+.gc-zoom__btn:active {
+  background: #e0e0e0;
+}
+
+/* ---- Basemap Toggle ---- */
+
+.gc-basemap__label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gc-text);
+}
+
+.gc-basemap__select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--gc-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: var(--gc-btn-bg);
+  color: var(--gc-text);
+  cursor: pointer;
+}
+
+/* ---- Layer Panel ---- */
+
+.gc-layers__heading,
+.gc-legend__heading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gc-text);
+  margin: 0 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--gc-border);
+}
+
+.gc-layers__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gc-layers__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 0.85rem;
+  color: var(--gc-text);
+  cursor: pointer;
+}
+
+.gc-layers__label:hover {
+  color: var(--gc-accent);
+}
+
+.gc-layers__checkbox {
+  accent-color: var(--gc-accent);
+}
+
+/* ---- Legend Panel ---- */
+
+.gc-legend__content {
+  font-size: 0.8rem;
+}
+
+/* Override some ArcGIS Legend widget styles */
+.gc-legend__content .esri-legend {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 640px) {
+  .gc-panel {
+    width: auto;
+    top: 8px;
+    right: 8px;
+    left: 8px;
+  }
+
+  .gc-panel__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gc-panel--collapsed .gc-panel__body {
+    display: none;
+  }
+}
