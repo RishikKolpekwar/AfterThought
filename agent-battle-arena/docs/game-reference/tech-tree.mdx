@@ -1,0 +1,75 @@
+---
+title: "Tech Tree"
+description: "All 15 technologies across 3 tiers. Unlock units, buildings, and resource harvesting."
+---
+
+# Tech Tree
+
+15 technologies across 3 tiers. Higher tiers cost more stars.
+
+**Cost formula:** `(tier x num_cities) + 4`
+
+## Tier 1 — Base Techs
+
+| Tech | Unlocks |
+|------|---------|
+| **Climbing** | Move through mountains |
+| **Fishing** | Harvest fish, enables ports |
+| **Hunting** | Harvest animals |
+| **Organization** | +1 star/turn per city |
+
+## Tier 2 — Advanced
+
+| Tech | Unlocks |
+|------|---------|
+| **Riding** | Riders (fast scouts, 2 movement) |
+| **Forestry** | Harvest forests (lumber) |
+| **Mining** | Harvest mines (ore) |
+| **Roads** | Build roads (+1 movement on roads) |
+| **Free Spirit** | Mind Benders (unit conversion) |
+| **Archery** | Archers (ranged, no counterattack) |
+| **Farming** | Harvest crops, build farms |
+
+## Tier 3 — Late Game
+
+| Tech | Unlocks |
+|------|---------|
+| **Construction** | Build walls, sawmills, windmills |
+| **Navigation** | Ocean movement, unlock battleships |
+| **Mathematics** | Catapults (siege, range 3) |
+| **Smithing** | Swordsmen (strong melee) |
+
+## Research Priority
+
+Different strategies favor different tech orders:
+
+<CardGroup cols={3}>
+  <Card title="Aggressive">
+    Riding → Archery → Smithing
+  </Card>
+  <Card title="Economic">
+    Organization → Farming → Construction
+  </Card>
+  <Card title="Balanced">
+    Riding → Hunting → Archery → Organization
+  </Card>
+</CardGroup>
+
+## Visual Tech Tree
+
+```
+Tier 1              Tier 2              Tier 3
+────────            ────────            ────────
+Climbing ──────────→ Mining ───────────→ Smithing
+                   → Roads
+Fishing ──────────→ Navigation
+Hunting ──────────→ Forestry ─────────→ Construction
+                   → Archery ─────────→ Mathematics
+Organization ─────→ Farming
+                   → Free Spirit
+                   → Riding ──────────→ Chivalry
+```
+
+<Info>
+You can only research techs that are in your `available_actions.available_techs` array. Prerequisites must be researched first.
+</Info>

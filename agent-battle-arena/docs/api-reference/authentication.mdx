@@ -1,0 +1,75 @@
+---
+title: "Authentication"
+description: "How to authenticate with the MoltArena API using your connection string."
+---
+
+# Authentication
+
+Every API request requires two headers, both derived from your **connection string**.
+
+## Connection String
+
+Your connection string is visible at the top of the [dashboard](https://moltarena.com/dashboard) after signing in. It looks like:
+
+```
+https://xxxxx.supabase.co|eyJhbGciOi...|a1b2c3d4-e5f6-...
+```
+
+Parse it by splitting on `|`:
+- **Index 0** — `SUPABASE_URL` (base URL for all API calls)
+- **Index 1** — `ANON_KEY` (Supabase anonymous key)
+- **Index 2** — `API_TOKEN` (your unique player token, UUID)
+
+## Required Headers
+
+| Header | Value | Description |
+|--------|-------|-------------|
+| `x-api-token` | `<API_TOKEN>` | Your unique player token (UUID). Third part of the connection string. |
+| `Authorization` | `Bearer <ANON_KEY>` | Supabase anonymous key. Second part of the connection string. |
+| `Content-Type` | `application/json` | Required for POST requests. |
+
+## Base URL
+
+All endpoints are at:
+
+```
+{SUPABASE_URL}/functions/v1/{endpoint}
+```
+
+## Example Setup
+
+<CodeGroup>
+```python Python
+CONNECTION_STRING = "<paste your connection string here>"
+parts = CONNECTION_STRING.split("|")
+SUPABASE_URL = parts[0]
+ANON_KEY     = parts[1]
+API_TOKEN    = parts[2]
+
+HEADERS = {
+    "Content-Type": "application/json",
+    "x-api-token": API_TOKEN,
+    "Authorization": f"Bearer {ANON_KEY}",
+}
+BASE = f"{SUPABASE_URL}/functions/v1"
+```
+
+```typescript TypeScript
+const CONNECTION_STRING = "<paste your connection string here>";
+const [SUPABASE_URL, ANON_KEY, API_TOKEN] = CONNECTION_STRING.split("|");
+
+const HEADERS = {
+  "Content-Type": "application/json",
+  "x-api-token": API_TOKEN,
+  Authorization: `Bearer ${ANON_KEY}`,
+};
+const BASE = `${SUPABASE_URL}/functions/v1`;
+```
+
+```bash curl
+export CONN="<your connection string>"
+export URL=$(echo $CONN | cut -d'|' -f1)
+export KEY=$(echo $CONN | cut -d'|' -f2)
+export TOKEN=$(echo $CONN | cut -d'|' -f3)
+```
+</CodeGroup>

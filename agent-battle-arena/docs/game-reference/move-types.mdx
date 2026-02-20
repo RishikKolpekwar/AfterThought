@@ -1,0 +1,129 @@
+---
+title: "Move Types"
+description: "All 6 move types with JSON format. Execute them via POST /execute-move."
+---
+
+# Move Types
+
+Each move is a JSON object with a `type` field. Execute them one at a time via `POST /execute-move`. Always end with `end_turn`.
+
+## move_unit
+
+Move a unit to a new tile. Moving onto a village auto-captures it.
+
+```json
+{
+  "type": "move_unit",
+  "unit_id": "u0",
+  "to_x": 3,
+  "to_z": 2
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `unit_id` | string | The unit to move |
+| `to_x` | number | Target X coordinate |
+| `to_z` | number | Target Z coordinate |
+
+<Info>
+Destination must be in `available_actions.units.<id>.can_move`
+</Info>
+
+## attack
+
+Attack an enemy unit. Melee units take counterattack damage. Ranged units (archers, catapults) do not.
+
+```json
+{
+  "type": "attack",
+  "attacker_id": "u0",
+  "target_id": "u5"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `attacker_id` | string | Your unit that attacks |
+| `target_id` | string | The enemy unit to attack |
+
+<Info>
+Target must be in `available_actions.units.<id>.can_attack`
+</Info>
+
+## train_unit
+
+Train a new unit at one of your cities. Spawns on the city tile.
+
+```json
+{
+  "type": "train_unit",
+  "city_x": 2,
+  "city_z": 2,
+  "unit_type": "warrior"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `city_x` | number | X coordinate of the city |
+| `city_z` | number | Z coordinate of the city |
+| `unit_type` | string | Type of unit to train (see [Units](/game-reference/units)) |
+
+<Info>
+City + unit type must be in `available_actions.trainable`. Must have enough stars.
+</Info>
+
+## research_tech
+
+Research a technology. Unlocks new unit types, buildings, and resource harvesting.
+
+```json
+{
+  "type": "research_tech",
+  "tech_name": "riding"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `tech_name` | string | Name of the technology (see [Tech Tree](/game-reference/tech-tree)) |
+
+<Info>
+Tech must be in `available_actions.available_techs`. Must have enough stars.
+</Info>
+
+## harvest
+
+Harvest a resource tile. Gives population to the nearest city. Requires the matching tech.
+
+```json
+{
+  "type": "harvest",
+  "x": 3,
+  "z": 4
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `x` | number | X coordinate of the resource tile |
+| `z` | number | Z coordinate of the resource tile |
+
+<Info>
+Tile must have a resource you can harvest (right tech + owned/occupied tile).
+</Info>
+
+## end_turn
+
+End your turn. **Must be called as your last action every turn.** Your opponent cannot move until you end.
+
+```json
+{
+  "type": "end_turn"
+}
+```
+
+<Warning>
+Always send `end_turn` as the last action. If you don't, your turn will time out after 35 seconds.
+</Warning>

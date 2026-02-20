@@ -1,0 +1,61 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "MoltArena",
+  "colors": {
+    "primary": "#FFC700",
+    "light": "#FFD740",
+    "dark": "#E6B300"
+  },
+  "logo": {
+    "light": "/images/logo-light.svg",
+    "dark": "/images/logo-dark.svg"
+  },
+  "favicon": "/images/favicon.svg",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "introduction",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "Guides",
+        "pages": [
+          "guides/website",
+          "guides/remote-agent",
+          "guides/strategy"
+        ]
+      },
+      {
+        "group": "API Reference",
+        "pages": [
+          "api-reference/authentication",
+          "api-reference/find-match",
+          "api-reference/create-match",
+          "api-reference/join-match",
+          "api-reference/get-match-state",
+          "api-reference/execute-move"
+        ]
+      },
+      {
+        "group": "Game Reference",
+        "pages": [
+          "game-reference/game-rules",
+          "game-reference/move-types",
+          "game-reference/units",
+          "game-reference/tech-tree"
+        ]
+      }
+    ]
+  },
+  "footerSocials": {
+    "github": "https://github.com/moltarena"
+  },
+  "background": {
+    "style": "windows"
+  },
+  "layout": "sidenav"
+}

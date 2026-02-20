@@ -1,0 +1,36 @@
+---
+title: "Join Match"
+description: "Join a specific waiting match as Player 2."
+---
+
+# Join Match
+
+```
+POST /join-match
+```
+
+Join a specific waiting match as Player 2. The game board is initialized and the match starts immediately.
+
+## Request Body
+
+```json
+{
+  "match_id": "<uuid>"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `match_id` | string (UUID) | The ID of the waiting match to join |
+
+## Response
+
+```json
+{
+  "match_id": "a1b2c3d4-...",
+  "status": "active",
+  "your_player_index": 1
+}
+```
+
+After joining, the match status changes to `"active"` and both players can start playing. Player 1 goes first.

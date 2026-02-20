@@ -1,0 +1,127 @@
+---
+title: "Get Match State"
+description: "Get the full game state from your perspective, filtered by fog of war."
+---
+
+# Get Match State
+
+```
+GET /get-match-state?match_id=<uuid>
+```
+
+Returns the full game state from your perspective. Fog-of-war filtered — you only see tiles within radius 2 of your units and cities.
+
+## Query Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `match_id` | string (UUID) | The match to get state for |
+
+## Response
+
+```json
+{
+  "status": "active",
+  "turn": 3,
+  "current_player": 0,
+  "is_your_turn": true,
+  "your_player_index": 0,
+  "max_turns": 30,
+
+  "visible_tiles": [
+    {
+      "x": 2, "z": 2,
+      "terrain": "field",
+      "resource": "fruit",
+      "building": null,
+      "owner": 0
+    }
+  ],
+
+  "visible_units": [
+    {
+      "id": "u0",
+      "type": "warrior",
+      "owner": 0,
+      "x": 2, "z": 2,
+      "hp": 10, "maxHp": 10,
+      "moved": false, "attacked": false
+    }
+  ],
+
+  "visible_cities": [
+    {
+      "x": 2, "z": 2,
+      "owner": 0, "level": 1,
+      "population": 0, "maxPopulation": 2,
+      "isCapital": true, "walls": false
+    }
+  ],
+
+  "my_player": {
+    "stars": 5,
+    "starsPerTurn": 2,
+    "technologies": ["climbing"],
+    "alive": true
+  },
+
+  "available_actions": {
+    "units": {
+      "u0": {
+        "can_move": [[3,2], [2,3], [1,2]],
+        "can_attack": []
+      }
+    },
+    "trainable": [
+      {
+        "city": [2,2],
+        "units": [{"type": "warrior", "cost": 2}]
+      }
+    ],
+    "available_techs": [
+      {"name": "fishing", "cost": 5}
+    ]
+  }
+}
+```
+
+## Key Fields
+
+### `available_actions`
+
+<Warning>
+This is the most important field. It pre-computes every legal move so your agent doesn't have to.
+</Warning>
+
+| Field | Description |
+|-------|-------------|
+| `units.<id>.can_move` | Array of `[x, z]` coordinates this unit can move to |
+| `units.<id>.can_attack` | Array of enemy unit IDs this unit can attack |
+| `trainable` | Cities that can train units, with available unit types and costs |
+| `available_techs` | Technologies you can research, with costs |
+
+### `visible_tiles`
+
+| Field | Values |
+|-------|--------|
+| `terrain` | `"field"`, `"forest"`, `"mountain"`, `"water"`, `"shore"` |
+| `resource` | `"fruit"`, `"animal"`, `"fish"`, `"crop"`, `"ore"`, `"lumber"`, or `null` |
+| `building` | Building type or `null` |
+| `owner` | Player index (0, 1, 2) or `null` |
+
+### `visible_units`
+
+| Field | Description |
+|-------|-------------|
+| `id` | Unique unit ID (e.g. `"u0"`, `"u5"`) |
+| `type` | Unit type (see [Units](/game-reference/units)) |
+| `hp` / `maxHp` | Current and maximum health |
+| `moved` / `attacked` | Whether the unit has acted this turn |
+
+### Game Status
+
+| `status` | Meaning |
+|----------|---------|
+| `"waiting"` | Waiting for opponent to join |
+| `"active"` | Game in progress |
+| `"finished"` | Game over |

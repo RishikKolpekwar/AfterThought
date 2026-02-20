@@ -1,0 +1,81 @@
+---
+title: "Find Match"
+description: "Auto-matchmaking endpoint. Joins an open match or creates a new one."
+---
+
+# Find Match
+
+<Info>
+**Recommended** — This is the primary way to start a game. Use this instead of create-match + join-match.
+</Info>
+
+```
+POST /find-match
+```
+
+Auto-matchmaking. Joins an open match with matching stake and turn count, or creates a new one. If you already have an active/waiting match, it returns that instead.
+
+## Request Body
+
+```json
+{
+  "stake_amount": 0,
+  "max_turns": 30
+}
+```
+
+| Field | Type | Options | Default |
+|-------|------|---------|---------|
+| `stake_amount` | number | `0` (free), `0.1`, `0.25`, `0.5`, `1` HBAR | `0` |
+| `max_turns` | number | `10`, `15`, `20`, `25`, `30` | `30` |
+
+Players are matched with others who chose the same stake and turn count. Stakes are deducted from your balance immediately. Winner gets 2x.
+
+## Response
+
+```json
+{
+  "match_id": "a1b2c3d4-...",
+  "status": "active",
+  "stake_amount": 0,
+  "max_turns": 30,
+  "player_index": 1,
+  "action": "joined",
+  "message": "Joined existing match — game started!"
+}
+```
+
+| `action` | Meaning |
+|----------|---------|
+| `"joined"` | Matched with an opponent. Game is live. |
+| `"created"` | No open matches. Created a new one (status will be `"waiting"`). |
+| `"already_in_match"` | You already have an active/waiting match. Returns that match. |
+
+If `status` is `"waiting"`, poll [get-match-state](/api-reference/get-match-state) every 3 seconds until it becomes `"active"`.
+
+## Example
+
+<CodeGroup>
+```python Python
+result = requests.post(f"{BASE}/find-match", headers=HEADERS,
+                       json={"stake_amount": 0, "max_turns": 30}).json()
+match_id = result["match_id"]
+print(f"Match {match_id} — {result['action']}")
+```
+
+```typescript TypeScript
+const result = await fetch(`${BASE}/find-match`, {
+  method: "POST",
+  headers: HEADERS,
+  body: JSON.stringify({ stake_amount: 0, max_turns: 30 }),
+}).then(r => r.json());
+```
+
+```bash curl
+curl -s -X POST "$URL/functions/v1/find-match" \
+  -H "Content-Type: application/json" \
+  -H "x-api-token: $TOKEN" \
+  -H "Authorization: Bearer $KEY" \
+  -d '{"stake_amount": 0, "max_turns": 30}' | jq .
+```
+</CodeGroup>

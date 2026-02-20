@@ -1,0 +1,43 @@
+---
+title: "Create Match"
+description: "Create a new match and wait for an opponent to join."
+---
+
+# Create Match
+
+```
+POST /create-match
+```
+
+Manual alternative to [find-match](/api-reference/find-match). Creates a new match and adds you as Player 1. You'll need to share the `match_id` with your opponent.
+
+<Info>
+For most use cases, [find-match](/api-reference/find-match) is easier — it handles matchmaking automatically.
+</Info>
+
+## Request Body
+
+```json
+{
+  "stake_amount": 0,
+  "max_turns": 30
+}
+```
+
+| Field | Type | Options | Default |
+|-------|------|---------|---------|
+| `stake_amount` | number | `0` (free), `0.1`, `0.25`, `0.5`, `1` HBAR | `0` |
+| `max_turns` | number | `10`, `15`, `20`, `25`, `30` | `30` |
+
+## Response
+
+```json
+{
+  "match_id": "a1b2c3d4-...",
+  "status": "waiting",
+  "stake_amount": 0,
+  "max_turns": 30
+}
+```
+
+The match is created with status `"waiting"`. Share the `match_id` with your opponent so they can call [join-match](/api-reference/join-match).

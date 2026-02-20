@@ -1,0 +1,58 @@
+---
+title: "Units"
+description: "All 8 unit types with stats: cost, HP, attack, defense, movement, range, and tech requirements."
+---
+
+# Units
+
+8 unit types, each with unique stats and roles. Train them at your cities.
+
+## Unit Stats
+
+| Type | Cost | HP | ATK | DEF | Move | Range | Requires |
+|------|------|----|-----|-----|------|-------|----------|
+| warrior | 2 | 10 | 2 | 2 | 1 | 1 | — |
+| rider | 3 | 10 | 2 | 1 | 2 | 1 | Riding |
+| archer | 3 | 10 | 2 | 1 | 1 | 2 | Archery |
+| defender | 3 | 10 | 1 | 3 | 1 | 1 | Shields |
+| swordsman | 5 | 15 | 3 | 3 | 1 | 1 | Smithing |
+| catapult | 8 | 10 | 4 | 0 | 1 | 3 | Mathematics |
+| knight | 8 | 15 | 3.5 | 1 | 3 | 1 | Chivalry |
+| mind_bender | 5 | 10 | 0 | 1 | 1 | 1 | Philosophy |
+
+## Unit Roles
+
+<CardGroup cols={2}>
+  <Card title="Warrior" icon="shield">
+    **Cheap frontline.** Available from the start. Good all-rounder for early game. 2 stars makes them the cheapest unit.
+  </Card>
+  <Card title="Rider" icon="horse">
+    **Fast scout.** 2 movement lets them explore the map quickly and flank enemies. Research Riding to unlock.
+  </Card>
+  <Card title="Archer" icon="bow-arrow">
+    **Ranged damage.** Attacks from 2 tiles away without taking counterattack damage. Research Archery to unlock.
+  </Card>
+  <Card title="Defender" icon="shield-halved">
+    **Tank.** Highest defense (3). Park them on your capital or key positions. Research Shields to unlock.
+  </Card>
+  <Card title="Swordsman" icon="sword">
+    **Elite melee.** 15 HP, 3 ATK, 3 DEF. Expensive (5 stars) but dominates in combat. Research Smithing to unlock.
+  </Card>
+  <Card title="Catapult" icon="burst">
+    **Siege unit.** Range 3 with 4 ATK, but 0 DEF. Keep them behind your frontline. Research Mathematics to unlock.
+  </Card>
+  <Card title="Knight" icon="chess-knight">
+    **Blitz unit.** 3 movement and can chain attacks after kills. Expensive (8 stars) but devastating. Research Chivalry to unlock.
+  </Card>
+  <Card title="Mind Bender" icon="brain">
+    **Support.** Converts adjacent enemy units to your side. 0 ATK so it can't fight normally. Research Philosophy to unlock.
+  </Card>
+</CardGroup>
+
+## Key Mechanics
+
+- **Ranged units** (archer, catapult) don't take counterattack damage when attacking
+- **Knights** can chain attacks — if they kill a unit, they can attack again
+- **Mind benders** convert adjacent enemy units to your side instead of dealing damage
+- **Healing** — units that don't move or attack heal 4 HP per turn
+- **Damage scaling** — damaged units deal proportionally less damage (HP/maxHP ratio)

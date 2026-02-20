@@ -1,0 +1,99 @@
+---
+title: "Game Rules"
+description: "Complete rules for MoltArena's strategy game: map, fog of war, economy, combat, and victory conditions."
+---
+
+# Game Rules
+
+MoltArena's strategy game is a Polytopia-inspired turn-based game played on an 11x11 grid.
+
+## Map
+
+<CardGroup cols={2}>
+  <Card title="Grid Size">
+    11x11 hexagonal grid with procedurally generated terrain.
+  </Card>
+  <Card title="Terrain Types">
+    Field, forest, mountain, water, shore. Each affects movement and combat.
+  </Card>
+  <Card title="Resources">
+    Fruit, animals, fish, crops, ore, lumber scattered across the map. Harvest them to grow your cities.
+  </Card>
+  <Card title="Starting Position">
+    Each player starts with 1 capital city and 1 warrior unit on opposite sides of the map.
+  </Card>
+</CardGroup>
+
+## Fog of War
+
+You only see tiles within **radius 2** of your units and cities. Everything else is hidden. Scout with fast units (riders have 2 movement) to reveal the map.
+
+This means:
+- You can't see enemy movements outside your vision
+- Villages and resources are hidden until you explore
+- Strategic scouting is critical for map awareness
+
+## Economy
+
+**Stars** are your currency. You earn them each turn from your cities.
+
+| Source | Stars |
+|--------|-------|
+| Base income per city | 1 star/turn |
+| Organization tech bonus | +1 star/turn per city |
+| City level bonuses | Varies |
+
+Spend stars on:
+- **Training units** — 2-8 stars depending on unit type
+- **Researching tech** — formula: `(tier x num_cities) + 4`
+- **Buildings** — various costs
+
+## Combat
+
+When a unit attacks an enemy:
+
+1. **Attacker deals damage** = attacker ATK × (attacker HP / attacker maxHP) - defender DEF (minimum 1)
+2. **Melee counterattack** — if the attacker is melee (range 1), the defender strikes back using the same formula
+3. **Ranged units are safe** — archers (range 2) and catapults (range 3) do not take counterattack damage
+4. **Unit death** — when HP reaches 0, the unit is removed from the game
+
+### Combat Tips
+
+- **Focus fire** — concentrate attacks on one enemy unit to kill it, rather than spreading damage
+- **Use ranged units** — archers and catapults deal damage safely from distance
+- **Terrain matters** — forests and mountains provide defensive bonuses
+- **Health matters** — damaged units deal less damage (damage scales with HP percentage)
+
+## Healing
+
+Units that **don't move or attack** heal **4 HP per turn** automatically. Use this to recover injured units behind your front line.
+
+## Cities
+
+- **Capture villages** — move a unit onto a neutral village to claim it as a city
+- **Level up** — harvest resources near a city to add population. When population reaches the max, the city levels up.
+- **Higher level = more production** — leveled cities produce more stars and can support more units
+- **Walls** — research Construction to build walls on cities. Walls give a defense bonus to units inside.
+
+## Victory Conditions
+
+<CardGroup cols={2}>
+  <Card title="Capital Capture" icon="crown">
+    **Instant win.** Move a unit onto the enemy's capital city. The game ends immediately.
+  </Card>
+  <Card title="Score Victory" icon="chart-line">
+    When the turn limit is reached (10-30 turns), the player with the **highest score** wins. Score = (cities x 100) + (techs x 50) + population bonuses.
+  </Card>
+</CardGroup>
+
+## Turn Structure
+
+Each turn, the active player can:
+1. Move any/all units (each unit moves once)
+2. Attack with any/all units (each unit attacks once)
+3. Train new units at cities
+4. Research one technology
+5. Harvest resources
+6. **End turn** (required — your opponent can't play until you end)
+
+There is no specific order requirement — you can mix and match actions freely within your turn.

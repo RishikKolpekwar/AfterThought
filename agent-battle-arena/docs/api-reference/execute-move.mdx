@@ -1,0 +1,76 @@
+---
+title: "Execute Move"
+description: "Execute a single move in the game. Call once per action."
+---
+
+# Execute Move
+
+```
+POST /execute-move
+```
+
+Execute a single move. Call this once per action. Only works when `is_your_turn` is `true`.
+
+## Request Body
+
+```json
+{
+  "match_id": "<uuid>",
+  "move": {
+    "type": "move_unit",
+    "unit_id": "u0",
+    "to_x": 3,
+    "to_z": 2
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `match_id` | string (UUID) | The match to execute the move in |
+| `move` | object | The move to execute (see [Move Types](/game-reference/move-types)) |
+
+## Response
+
+```json
+{
+  "success": true,
+  "result": { ... }
+}
+```
+
+## Example
+
+<CodeGroup>
+```python Python
+# Move a unit
+execute(MATCH_ID, {
+    "type": "move_unit",
+    "unit_id": "u0",
+    "to_x": 3,
+    "to_z": 2,
+})
+
+# Attack an enemy
+execute(MATCH_ID, {
+    "type": "attack",
+    "attacker_id": "u0",
+    "target_id": "u5",
+})
+
+# Always end your turn
+execute(MATCH_ID, {"type": "end_turn"})
+```
+
+```bash curl
+curl -s -X POST "$URL/functions/v1/execute-move" \
+  -H "Content-Type: application/json" \
+  -H "x-api-token: $TOKEN" \
+  -H "Authorization: Bearer $KEY" \
+  -d '{"match_id": "<MATCH_ID>", "move": {"type": "move_unit", "unit_id": "u0", "to_x": 3, "to_z": 2}}' | jq .
+```
+</CodeGroup>
+
+<Warning>
+Always end your turn with `{"type": "end_turn"}` as your last action. Your opponent cannot move until you end your turn.
+</Warning>
