@@ -145,63 +145,76 @@ function ProjectCard({ project, added, onToggle }: { project: Project; added: bo
       }}
     >
       <div style={{ padding: '8px 10px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 6 }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 12, fontWeight: 700, color: '#e2e8f0', marginBottom: 2 }}>
-              {TYPE_ICON[project.type] ?? '📦'} {project.name}
-            </div>
-            <div style={{ fontSize: 10, color: '#64748b', marginBottom: 4 }}>
-              {project.description}
-            </div>
-            {/* Effect tags */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-              {project.effects.capacityBoostMW && (
-                <span style={tagStyle('#1d4ed8')}>+{project.effects.capacityBoostMW} MW</span>
-              )}
-              {project.effects.vulnerabilityReduction && (
-                <span style={tagStyle('#065f46')}>
-                  -{(project.effects.vulnerabilityReduction * 100).toFixed(0)}% vuln
-                </span>
-              )}
-              {project.effects.cascadeResistance && (
-                <span style={tagStyle('#78350f')}>
-                  +{(project.effects.cascadeResistance * 100).toFixed(0)}% cascade resist
-                </span>
-              )}
-              {project.effects.demandReductionFactor && (
-                <span style={tagStyle('#4c1d95')}>
-                  -{(project.effects.demandReductionFactor * 100).toFixed(0)}% demand
-                </span>
-              )}
-              {project.effects.recoverySpeedBoost && (
-                <span style={tagStyle('#1e3a5f')}>
-                  +{(project.effects.recoverySpeedBoost * 100).toFixed(0)}% recovery
-                </span>
-              )}
-            </div>
+
+        {/* Name + cost badge on same row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#e2e8f0' }}>
+            {TYPE_ICON[project.type] ?? '📦'} {project.name}
           </div>
-
-          <button
-            onClick={onToggle}
-            style={{
-              flexShrink: 0,
-              padding: '5px 10px',
-              borderRadius: 5,
-              border: 'none',
-              background: added ? '#7f1d1d' : '#1d4ed8',
-              color: '#fff',
-              fontSize: 11,
-              fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            {added ? 'Remove' : 'Add'}
-          </button>
+          <div style={{
+            flexShrink: 0,
+            padding: '3px 8px',
+            borderRadius: 5,
+            background: added ? '#1e3a5f' : '#0f2a10',
+            border: `1px solid ${added ? '#3b82f6' : '#166534'}`,
+            fontSize: 12,
+            fontWeight: 800,
+            color: added ? '#60a5fa' : '#4ade80',
+            letterSpacing: '-0.01em',
+          }}>
+            ${(project.capexUSD / 1_000_000).toFixed(0)}M
+          </div>
         </div>
 
-        <div style={{ marginTop: 6, fontSize: 11, color: '#94a3b8', fontWeight: 600 }}>
-          ${(project.capexUSD / 1_000_000).toFixed(0)}M CapEx
+        <div style={{ fontSize: 10, color: '#64748b', marginBottom: 6 }}>
+          {project.description}
         </div>
+
+        {/* Effect tags */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
+          {project.effects.capacityBoostMW && (
+            <span style={tagStyle('#1d4ed8')}>+{project.effects.capacityBoostMW} MW</span>
+          )}
+          {project.effects.vulnerabilityReduction && (
+            <span style={tagStyle('#065f46')}>
+              -{(project.effects.vulnerabilityReduction * 100).toFixed(0)}% vuln
+            </span>
+          )}
+          {project.effects.cascadeResistance && (
+            <span style={tagStyle('#78350f')}>
+              +{(project.effects.cascadeResistance * 100).toFixed(0)}% cascade resist
+            </span>
+          )}
+          {project.effects.demandReductionFactor && (
+            <span style={tagStyle('#4c1d95')}>
+              -{(project.effects.demandReductionFactor * 100).toFixed(0)}% demand
+            </span>
+          )}
+          {project.effects.recoverySpeedBoost && (
+            <span style={tagStyle('#1e3a5f')}>
+              +{(project.effects.recoverySpeedBoost * 100).toFixed(0)}% recovery
+            </span>
+          )}
+        </div>
+
+        {/* Add / Remove button */}
+        <button
+          onClick={onToggle}
+          style={{
+            width: '100%',
+            padding: '6px',
+            borderRadius: 5,
+            border: 'none',
+            background: added ? '#7f1d1d' : '#1d4ed8',
+            color: '#fff',
+            fontSize: 11,
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          {added ? 'Remove from Plan' : 'Add to Plan'}
+        </button>
+
       </div>
     </div>
   );
